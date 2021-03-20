@@ -17,7 +17,7 @@ type Pilote struct {
 
 func AddPilote(license time.Time, among time.Time, staff_id int) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -41,7 +41,8 @@ func AddPilote(license time.Time, among time.Time, staff_id int) {
 
 func GetPilote(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -78,7 +79,8 @@ func GetPilote(selector string, filter string) [][]string {
 
 func UpdatePilote(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -89,7 +91,8 @@ func UpdatePilote(column string, new_value string, condition string) {
 }
 
 func DeletePilote(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}

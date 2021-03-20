@@ -8,7 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Fligth struct {
+type Flight struct {
 	id            int
 	id_departures int
 	ariaval       time.Time
@@ -18,7 +18,7 @@ type Fligth struct {
 
 func AddFligth(id_departures int, ariaval time.Time, id_route int, id_device int) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -27,7 +27,7 @@ func AddFligth(id_departures int, ariaval time.Time, id_route int, id_device int
 	defer db.Close()
 
 	// perform a db.Query insert
-	insert, err := db.Query("INSERT INTO `Fligth`(`id_departures`, `arrival`, `id_route`, `id_device`) VALUES (?, ?, ?, ?)",
+	insert, err := db.Query("INSERT INTO `Flight`(`id_departures`, `arrival`, `id_route`, `id_device`) VALUES (?, ?, ?, ?)",
 		id_departures, ariaval, id_route, id_device)
 
 	//if there is an error inserting, handle it
@@ -42,7 +42,8 @@ func AddFligth(id_departures int, ariaval time.Time, id_route int, id_device int
 
 func GetFligth(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
@@ -52,7 +53,7 @@ func GetFligth(selector string, filter string) [][]string {
 	} else {
 		query += "* "
 	}
-	query += "FROM Fligth "
+	query += "FROM Flight "
 	if filter != "" {
 		query += " WHERE `id` IN (" + filter + ")"
 	}
@@ -66,7 +67,7 @@ func GetFligth(selector string, filter string) [][]string {
 	}
 
 	var return_val [][]string
-	var tag Fligth
+	var tag Flight
 	for selecte.Next() {
 		selecte.Scan(&tag.id, &tag.id_departures, &tag.id_device, &tag.id_route, &tag.ariaval)
 		to_inject := []string{strconv.Itoa(tag.id), strconv.Itoa(tag.id_departures), strconv.Itoa(tag.id_device),
@@ -80,23 +81,25 @@ func GetFligth(selector string, filter string) [][]string {
 
 func UpdateFligth(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "UPDATE `Fligth` SET " + column + " " + new_value + " WHERE " + condition
+	query := "UPDATE `Flight` SET " + column + " " + new_value + " WHERE " + condition
 	db.Query(query)
 
 }
 
 func DeleteFligth(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "DELETE FROM `Fligth` WHERE " + condition
+	query := "DELETE FROM `Flight` WHERE " + condition
 
 	db.Query(query)
 

@@ -15,7 +15,7 @@ type Route struct {
 
 func AddRoute(origin string, arrival string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -39,7 +39,8 @@ func AddRoute(origin string, arrival string) {
 
 func GetRoute(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -76,7 +77,8 @@ func GetRoute(selector string, filter string) [][]string {
 
 func UpdateRoute(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -87,7 +89,8 @@ func UpdateRoute(column string, new_value string, condition string) {
 }
 
 func DeleteRoute(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}

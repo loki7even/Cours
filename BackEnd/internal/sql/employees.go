@@ -19,7 +19,7 @@ type Employees struct {
 
 func AddEmployees(aicrew int, ground int, social_security int, name string, first_name string, address string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -43,7 +43,8 @@ func AddEmployees(aicrew int, ground int, social_security int, name string, firs
 
 func GetEmployees(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -81,7 +82,8 @@ func GetEmployees(selector string, filter string) [][]string {
 
 func UpdateEmployees(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}
@@ -92,7 +94,8 @@ func UpdateEmployees(column string, new_value string, condition string) {
 }
 
 func DeleteEmployees(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+		
 	if err != nil {
 		panic(err.Error())
 	}

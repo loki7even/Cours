@@ -4,9 +4,12 @@ import (
 	"database/sql"
 	"strconv"
 	"time"
-
+	
 	_ "github.com/go-sql-driver/mysql"
 )
+
+var passwd string = ""
+var ip string = "127.0.0.1"
 
 type CabinCrew struct {
 	id       int
@@ -17,7 +20,7 @@ type CabinCrew struct {
 
 func AddCabinCrew(fonction string, among time.Time, staff_id int) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -41,7 +44,8 @@ func AddCabinCrew(fonction string, among time.Time, staff_id int) {
 
 func GetCabinCrew(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
@@ -78,7 +82,8 @@ func GetCabinCrew(selector string, filter string) [][]string {
 
 func UpdateCabinCrew(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
@@ -89,7 +94,8 @@ func UpdateCabinCrew(column string, new_value string, condition string) {
 }
 
 func DeleteCabinCrew(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	
 	if err != nil {
 		panic(err.Error())
 	}
