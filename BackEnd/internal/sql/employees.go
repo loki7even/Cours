@@ -3,11 +3,13 @@ package sql
 import (
 	"database/sql"
 	"strconv"
+	"strings"
 
+	"github.com/vosmith/pancake"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Employees struct {
+type employees struct {
 	id              int
 	aicrew          int
 	ground          int
@@ -19,7 +21,7 @@ type Employees struct {
 
 func AddEmployees(aicrew int, ground int, social_security int, name string, first_name string, address string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -28,7 +30,7 @@ func AddEmployees(aicrew int, ground int, social_security int, name string, firs
 	defer db.Close()
 
 	// perform a db.Query insert
-	insert, err := db.Query("INSERT INTO `Employees`(`aircrew`, `ground`, `social_security`, `name`, `first_name`, `address`) VALUES (?, ?, ?, ?, ?, ?)",
+	insert, err := db.Query("INSERT INTO `employees`(`aircrew`, `ground`, `social_security`, `name`, `first_name`, `address`) VALUES (?, ?, ?, ?, ?, ?)",
 		aicrew, ground, social_security, name, first_name, address)
 
 	//if there is an error inserting, handle it
@@ -43,7 +45,7 @@ func AddEmployees(aicrew int, ground int, social_security int, name string, firs
 
 func GetEmployees(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -53,9 +55,9 @@ func GetEmployees(selector string, filter string) [][]string {
 	} else {
 		query += "* "
 	}
-	query += "FROM Employees "
+	query += "FROM employees "
 	if filter != "" {
-		query += " WHERE `id` IN (" + filter + ")"
+		query += filter
 	}
 
 	query += ";"
@@ -67,7 +69,7 @@ func GetEmployees(selector string, filter string) [][]string {
 	}
 
 	var return_val [][]string
-	var tag Employees
+	var tag employees
 	for selecte.Next() {
 		selecte.Scan(&tag.id, &tag.adress, &tag.aicrew, &tag.ground, &tag.name, &tag.social_security, &tag.first_name)
 		to_inject := []string{strconv.Itoa(tag.id), tag.adress, strconv.Itoa(tag.aicrew), strconv.Itoa(tag.ground),
@@ -81,24 +83,32 @@ func GetEmployees(selector string, filter string) [][]string {
 
 func UpdateEmployees(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "UPDATE `Employees` SET " + column + " " + new_value + " WHERE " + condition
+	query := "UPDATE `employees` SET " + column + " " + new_value + " WHERE " + condition
 	db.Query(query)
 
 }
 
 func DeleteEmployees(condition string) {
-	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "DELETE FROM `Employees` WHERE " + condition
+	query := "DELETE FROM `employees` WHERE " + condition
 
 	db.Query(query)
 
+}
+
+func GetPilotInfo() [][]string {
+	
+	pilote_id,_ := pancake.Strings(GetPilote("staff_id", ""))
+	
+	filter := "WHERE id IN ("+ strings.Join(pilote_id[:], ",") +")"
+	return GetEmployees("", filter)
 }

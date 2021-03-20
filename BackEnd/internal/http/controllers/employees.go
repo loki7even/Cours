@@ -12,6 +12,8 @@ import (
 func EmployeesBootstrap(app fiber.Router) {
 	app.Get("/", employeesGetlist)
 
+	app.Get("/pilotes", employeesGetPilotes)
+
 	app.Post("/", employeePost)
 
 	app.Patch("/", departuresUpdate)
@@ -24,6 +26,7 @@ func employeesGetlist(c *fiber.Ctx) error {
 
 	c.JSON(&fiber.Map{
 		"success": true,
+		"variable": sql.GetEmployees("", ""),
 		"message": "Hello from the other side",
 	})
 	return nil
@@ -74,6 +77,16 @@ func employeesDelete(c *fiber.Ctx) error {
 	c.JSON(&fiber.Map{
 		"success": true,
 		"message": "Delete Employees",
+	})
+	return nil
+}
+
+
+func employeesGetPilotes(c *fiber.Ctx) error {
+	c.JSON(&fiber.Map{
+		"success": true,
+		"variable": sql.GetPilotInfo(),
+		"message": "Pilote Info",
 	})
 	return nil
 }
