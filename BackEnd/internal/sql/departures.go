@@ -8,7 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type departure struct {
+type departures struct {
 	id          int
 	id_flight   int
 	date        time.Time
@@ -21,7 +21,7 @@ type departure struct {
 
 func AddDepartures(id_flight int, date time.Time, pilote int, copilote int, aircrew string, free_places int, occupied int) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -30,7 +30,7 @@ func AddDepartures(id_flight int, date time.Time, pilote int, copilote int, airc
 	defer db.Close()
 
 	// perform a db.Query insert
-	insert, err := db.Query("INSERT INTO `departure`(`id_flight`, `date`, `pilote`, `copilote`, `aircrew`, `free_places`, `occupied`, `ticket_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+	insert, err := db.Query("INSERT INTO `departures`(`id_fligth`, `date`, `pilote`, `copilote`, `aircrew`, `free_places`, `occupied`, `ticket_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		id_flight, date, pilote, copilote, aircrew, free_places, occupied)
 
 	//if there is an error inserting, handle it
@@ -45,8 +45,7 @@ func AddDepartures(id_flight int, date time.Time, pilote int, copilote int, airc
 
 func GetDepartures(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -56,7 +55,7 @@ func GetDepartures(selector string, filter string) [][]string {
 	} else {
 		query += "* "
 	}
-	query += "FROM departure "
+	query += "FROM departures "
 	if filter != "" {
 		query += " WHERE `id` IN (" + filter + ")"
 	}
@@ -70,7 +69,7 @@ func GetDepartures(selector string, filter string) [][]string {
 	}
 
 	var return_val [][]string
-	var tag departure
+	var tag departures
 	for selecte.Next() {
 		selecte.Scan(&tag.id, &tag.id_flight, &tag.date, &tag.aircrew, &tag.copilote, &tag.pilote, &tag.free_places,
 			&tag.occupied)
@@ -86,25 +85,23 @@ func GetDepartures(selector string, filter string) [][]string {
 
 func UpdateDepartus(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "UPDATE `departure` SET " + column + " " + new_value + " WHERE " + condition
+	query := "UPDATE `departures` SET " + column + " " + new_value + " WHERE " + condition
 	db.Query(query)
 
 }
 
 func DeleteDepartus(condition string) {
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	query := "DELETE FROM `departure` WHERE " + condition
+	query := "DELETE FROM `departures` WHERE " + condition
 
 	db.Query(query)
 

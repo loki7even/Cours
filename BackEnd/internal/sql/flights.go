@@ -18,7 +18,7 @@ type Flight struct {
 
 func AddFligth(id_departures int, ariaval time.Time, id_route int, id_device int) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -42,8 +42,7 @@ func AddFligth(id_departures int, ariaval time.Time, id_route int, id_device int
 
 func GetFligth(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -81,8 +80,7 @@ func GetFligth(selector string, filter string) [][]string {
 
 func UpdateFligth(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -93,8 +91,7 @@ func UpdateFligth(column string, new_value string, condition string) {
 }
 
 func DeleteFligth(condition string) {
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}

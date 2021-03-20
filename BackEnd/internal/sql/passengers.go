@@ -19,7 +19,7 @@ type Passenger struct {
 
 func AddPassenger(profession string, ticket_id int, bank int, name string, first_name string, address string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -43,8 +43,7 @@ func AddPassenger(profession string, ticket_id int, bank int, name string, first
 
 func GetPassenger(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -82,8 +81,7 @@ func GetPassenger(selector string, filter string) [][]string {
 
 func UpdatePassenger(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -94,8 +92,7 @@ func UpdatePassenger(column string, new_value string, condition string) {
 }
 
 func DeletePassenger(condition string) {
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}

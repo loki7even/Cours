@@ -17,7 +17,7 @@ type Tickets struct {
 
 func AddTickets(expire time.Time, price int, departures_id int) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 
 	if err != nil {
 		panic(err.Error())
@@ -41,8 +41,7 @@ func AddTickets(expire time.Time, price int, departures_id int) {
 
 func GetTickets(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -79,8 +78,7 @@ func GetTickets(selector string, filter string) [][]string {
 
 func UpdateTickets(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -91,8 +89,7 @@ func UpdateTickets(column string, new_value string, condition string) {
 }
 
 func DeleteTickets(condition string) {
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
 	if err != nil {
 		panic(err.Error())
 	}

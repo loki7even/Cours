@@ -15,8 +15,8 @@ type Device struct {
 
 func AddDevices(capacity int, types string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-	
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+
 	if err != nil {
 		panic(err.Error())
 	}
@@ -38,8 +38,8 @@ func AddDevices(capacity int, types string) {
 
 func GetDevices(selector string, filter string) [][]string {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		if err != nil {
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	if err != nil {
 		panic(err.Error())
 	}
 	query := "SELECT "
@@ -75,8 +75,8 @@ func GetDevices(selector string, filter string) [][]string {
 
 func UpdateDevice(column string, new_value string, condition string) {
 
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		if err != nil {
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	if err != nil {
 		panic(err.Error())
 	}
 
@@ -86,8 +86,8 @@ func UpdateDevice(column string, new_value string, condition string) {
 }
 
 func DeleteDevice(condition string) {
-	db, err := sql.Open("mysql", "root" + passwd + "@tcp(" + ip + ":3306)/aircraft")
-		if err != nil {
+	db, err := sql.Open("mysql", "root:passwd@tcp(172.21.0.2:3306)/aircraft")
+	if err != nil {
 		panic(err.Error())
 	}
 
